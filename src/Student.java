@@ -1,33 +1,44 @@
 import java.util.*;
 
 public class Student extends Persoana implements Comparator<Student>{
-    int grupa;
+    public int grupa;
+    public int anul;
 
-    public Student(String nume, String prenume, int grupa) {
+    public Student(String nume, String prenume, int grupa, int anul) {
         this.nume = nume;
         this.prenume = prenume;
         this.grupa = grupa;
+        this.anul=anul;
     }
 
     public Student() {
         this.nume=null;
         this.prenume=null;
         this.grupa=0;
+        this.anul=0;
+    }
+
+    Student(String nume, String prenume){
+        this.nume=nume;
+        this.prenume=prenume;
+        this.anul=0;
+        this.grupa=0;
     }
 
     Student(ArrayList<String> properties) throws Exception {
-        if ( properties.size() != 3 ) {
+        if ( properties.size() != 4 ) {
             throw new Exception("Invalid number of properties! The student cannot be created!");
         } else {
             this.nume = properties.get(0);
             this.prenume = properties.get(1);
             this.grupa = Integer.parseInt(properties.get(2));
+            this.anul=Integer.parseInt(properties.get(3));
         }
     }
 
     @Override
     public String toString() {
-        return "Student : {" + "nume=" + nume + ", prenume=" + prenume + ", grupa=" + grupa + '}';
+        return "Student : {" + "nume= " + nume + ", prenume= " + prenume + ", grupa= " + grupa + ", anul= " + anul + " } ";
     }
 
     public String getNume() {
@@ -50,9 +61,13 @@ public class Student extends Persoana implements Comparator<Student>{
         return grupa;
     }
 
+    public int getAnul(){
+        return anul;
+    }
+
     @Override
     public int hashCode() {
-        final int prim=29;
+        final int prim=31;
         int rezultat=1;
         rezultat= prim*rezultat +grupa;
         if(nume==null)
@@ -81,16 +96,7 @@ public class Student extends Persoana implements Comparator<Student>{
             if(this.prenume.compareTo(o.prenume)>0)
                 return 1;
             else
-            if(this.prenume.compareTo(o.prenume)<0)
                 return -1;
-            else
-            if(this.grupa>o.grupa)
-                return 1;
-            else
-            if(this.grupa<o.grupa)
-                return -1;
-            else
-                return 0;
         }
     }
 
@@ -106,17 +112,14 @@ public class Student extends Persoana implements Comparator<Student>{
             if(o1.prenume.compareTo(o2.prenume)>0)
                 return 1;
             else
-            if(o1.prenume.compareTo(o2.prenume)<0)
                 return -1;
-            else
-            if(o1.grupa>o2.grupa)
-                return 1;
-            else
-            if(o1.grupa<o2.grupa)
-                return -1;
-            else
-                return 0;
         }
+    }
+
+    public boolean CompareByNameAndPrenume(Student student){
+        if(this.nume==student.nume && this.prenume==student.prenume)
+            return true;
+        return false;
     }
 
     @Override

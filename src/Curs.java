@@ -1,18 +1,20 @@
 import java.util.*;
 
 public class Curs implements OperatiiCurs{
-    String nume;
-    String descriere;
-    Profesor profu;
-    Set<Student> studenti;
-    HashMap<Student,Integer> note_studenti;
-    HashMap<Integer, ArrayList<Student>> grupe_studenti;
+    public String nume;
+    public String descriere;
+    public Profesor profu;
+    public Set<Student> studenti;
+    public HashMap<Student,Integer> note_studenti;
+    public HashMap<Integer, ArrayList<Student>> grupe_studenti;
+    public int an;
 
-    public Curs(String nume, String descriere, Profesor profu, Set<Student> stud, Integer[] note) {
+    public Curs(String nume, String descriere, Profesor profu, Set<Student> stud, Integer[] note, int an) {
         this.nume = nume;
         this.descriere = descriere;
         this.profu = profu;
         this.studenti = stud;
+        this.an=an;
 
         this.note_studenti = new HashMap<Student, Integer>();
         this.grupe_studenti = new HashMap<Integer,ArrayList<Student>>();
@@ -43,11 +45,12 @@ public class Curs implements OperatiiCurs{
         }
     }
 
-    public Curs(String nume, String descriere, Profesor profu, Set<Student> stud) {
+    public Curs(String nume, String descriere, Profesor profu, Set<Student> stud, int an) {
         this.nume = nume;
         this.descriere = descriere;
         this.profu = profu;
         this.studenti = stud;
+        this.an=an;
 
         this.note_studenti = new HashMap<Student, Integer>();
         this.grupe_studenti = new HashMap<Integer,ArrayList<Student>>();
@@ -80,6 +83,7 @@ public class Curs implements OperatiiCurs{
         this.studenti= null;
         this.note_studenti=new HashMap<Student,Integer>();
         this.grupe_studenti= new HashMap<>();
+        an=0;
     }
 
     @Override
@@ -158,14 +162,9 @@ public class Curs implements OperatiiCurs{
         this.profu=null;
     }
 
-    public void AddProf(Profesor profu) {
-        this.profu=profu;
-    }
-
     public void PrintStudAndNote() {
-        System.out.println("Notele studentilor la cursul "+ nume+" :\n");
         for(Student student: note_studenti.keySet())
-            System.out.println(student.getNume()+" "+student.getPrenume()+ " -- Nota: "+ note_studenti.get(student));
+            System.out.println(student.getNume()+" "+student.getPrenume()+ ": "+ note_studenti.get(student));
     }
 
     public void PrintStud() {
@@ -176,9 +175,23 @@ public class Curs implements OperatiiCurs{
 
     @Override
     public String toString() {
-        String str = "Curs : " + "nume = " + nume + ", descriere = " + descriere + ",\nprofu = " + profu +",\nstudenti:\n" ;
-        for(Student s : studenti)
-            str += s + "\n";
+        String str = "Curs: " + "Nume= " + nume + ", Descriere= " + descriere + ", Anul=  "+an+ ",\nProfesor= " + profu +",\nStudenti: \n";
+        int i=0;
+        for (Student s : studenti) {
+            if(i==0)
+                str+="\t* ";
+            else
+                if(i%2==0)
+                    str += "\n\t* ";
+            Integer notaStudent = note_studenti.get(s) != null ? note_studenti.get(s) : 0;
+            str += s + "-- nota= " +  notaStudent;
+            i++;
+            if(i==studenti.size())
+                str+=";";
+            else
+            if(i!=0)
+                str+=", ";
+        }
         return str;
     }
 
@@ -201,10 +214,6 @@ public class Curs implements OperatiiCurs{
         return (double)suma_note_stud()/numar_studenti();
     }
 
-    public void print_media_stud() {
-        System.out.println("Media notelor studentilor de la cursul de "+ nume+ "este "+ media_stud_double());
-    }
-
     public int suma_note_stud() {
         int suma=0;
         for(Integer i:note_studenti.values())
@@ -219,6 +228,63 @@ public class Curs implements OperatiiCurs{
     }
 
     public Profesor GetProf() {	return profu;	}
+
+    public String GetNume() {
+        return nume;
+    }
+
     public String GetNumeProf() { return  profu.GetNume(); }
-    public String GetNume(){ return nume; }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((nume == null) ? 0 : nume.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Curs other = (Curs) obj;
+        if (nume == null) {
+            if (other.nume != null)
+                return false;
+        } else if (!nume.equals(other.nume))
+            return false;
+        return true;
+    }
+
+    public boolean FindStudent(Student student){
+        return studenti.contains(student);
+    }
+
+    public boolean FindByNumeAndPrenume(String nume, String prenume) {
+        for(Student student:studenti)
+            if(student.CompareByNameAndPrenume(new Student(nume,prenume))==true)
+                return true;
+        return false;
+    }
+
+    public Student ReturnStudent(String nume, String prenume){
+        for(Student student:studenti)
+            if(student.CompareByNameAndPrenume(new Student(nume,prenume))==true)
+                return student;
+        return null;
+    }
+
+    public Integer nota_student(String nume, String prenume){
+        for ( Map.Entry<Student, Integer> entry : note_studenti.entrySet()) {
+            Student student = entry.getKey();
+            Integer nota = entry.getValue();
+            if (student.CompareByNameAndPrenume(new Student(nume, prenume)) == true)
+                return (Integer) nota;
+        }
+        return 0;
+    }
 }

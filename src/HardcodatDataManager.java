@@ -21,7 +21,7 @@ public class HardcodatDataManager implements IDataLoader {
 
         Student studenti[] = new Student[nume.length];
         for (int i = 0; i < nume.length;i++) {
-            Student s = new Student(nume[i], prenume[i], 1 + rand.nextInt(4));
+            Student s = new Student(nume[i], prenume[i], 1 + rand.nextInt(4), 2);
             studenti[i] = s;
         }
         return studenti;
@@ -50,11 +50,13 @@ public class HardcodatDataManager implements IDataLoader {
     public Curs[] createCoursesData() {
         String curs[] = { "Teoria sistemelor", "Masurari electronice", "Dispozitive electronice", "Structuri de date", "Procesarea semnalelor", "Limba engleza", "Limbaje formale", "PCLP 1", "PCLP 2" };
         String descriere = "descriere curs";
+        int[] ani={2,2,2,2,2,1,2,1,1};
+        int index=0;
         ArrayList<Curs> cursuri = new ArrayList<>();
         for (String numeCurs : curs) {
             Set<Student> studentsData = createRandomSetOfStudents();
             Profesor profesor = dataSetOfProfesor[rand.nextInt(dataSetOfProfesor.length)];
-            Curs c = new Curs(numeCurs, descriere, profesor, studentsData);
+            Curs c = new Curs(numeCurs, descriere, profesor, studentsData, ani[index++]);
             cursuri.add(c);
         }
         return cursuri.toArray(new Curs[cursuri.size()]);
@@ -66,7 +68,7 @@ public class HardcodatDataManager implements IDataLoader {
                 try {
                     c.AddNotaToStud(s, 1 + rand.nextInt(10));
                 } catch (Exception e) {
-
+                    System.out.println(e.getMessage());
                 }
             }
         }

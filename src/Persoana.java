@@ -1,6 +1,6 @@
 public abstract class Persoana {
-    String nume;
-    String prenume;
+    public String nume;
+    public String prenume;
 
     @Override
     public String toString() {
