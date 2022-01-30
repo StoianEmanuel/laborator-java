@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class StudentStrategy implements MenuStrategy{
     public Student student;
@@ -34,11 +35,9 @@ public class StudentStrategy implements MenuStrategy{
         return null;
     }
 
-    //
     public Student returnStudent(){
         return student;
     }
-    //
 
     @Override
     public UserAccountType getAccountType() {
@@ -68,21 +67,42 @@ public class StudentStrategy implements MenuStrategy{
 
     @Override
     public void nextMenuOption() {
-        JFrame owner= new JFrame("StudentInterface");
-        StudentForm studentForm=new StudentForm(owner,getUser(student.nume,student.prenume));
-        owner.setContentPane(studentForm.getMainPanel());
-        owner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        owner.pack();
-        owner.setVisible(true);
     }
 
     @Override
     public void previousMenuOption() {
-        JFrame frame= new JFrame("LoginForm");
-        LoginForm loginForm = new LoginForm(frame);
-        frame.setContentPane(loginForm.getMainPanel());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+    }
+
+    @Override
+    public void menuOption() {
+        String[] list = Application.getInstance().manager.SerchStudent(student);
+        for(String s : Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().keySet()) {
+            String prenume = Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().get(s);
+            double medie = Application.getInstance().manager.MediaStudent(new Student(s,prenume));
+                System.out.println("Media acestui an: " + medie);
+        }
+        System.out.println("Cursuri: ");
+        int i = 1;
+        for(String s : list)
+        {
+            if(s == null)   {
+                continue;
+            }
+            else {
+                System.out.println(i + ". " + s.split(":")[0] + ": " + s.split(":")[1]);
+                i++;
+            }
+        }
+
+        System.out.println("x. " + " Inchidere aplicatie");
+        try (Scanner scanner = new Scanner(System.in)){
+            char c=scanner.next().charAt(0);
+            if(c == 'x' || c=='X') {
+                System.out.println("\nProcesul s-a incheiat");
+            }
+        }
+        catch (Exception e)  {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -15,7 +15,6 @@ public class Curs implements OperatiiCurs{
         this.profu = profu;
         this.studenti = stud;
         this.an=an;
-
         this.note_studenti = new HashMap<Student, Integer>();
         this.grupe_studenti = new HashMap<Integer,ArrayList<Student>>();
         ArrayList<Integer> grupe=new ArrayList<Integer>();
@@ -51,7 +50,6 @@ public class Curs implements OperatiiCurs{
         this.profu = profu;
         this.studenti = stud;
         this.an=an;
-
         this.note_studenti = new HashMap<Student, Integer>();
         this.grupe_studenti = new HashMap<Integer,ArrayList<Student>>();
         ArrayList<Integer> grupe=new ArrayList<Integer>();
@@ -101,6 +99,22 @@ public class Curs implements OperatiiCurs{
         Comparator<Student> compara= Comparator.comparing(Student::getNume).thenComparing(Student::getPrenume).thenComparing(Student::getGrupa);
         Collections.sort(studentii_grupei,compara);
         grupe_studenti.	replace(student.getGrupa(),studentii_grupei);
+    }
+
+    public Curs(String nume, String descriere, Profesor profu, Set<Student> studenti, HashMap<Student, Integer> note, int an) {
+        this.nume = nume;
+        this.descriere = descriere;
+        this.profu = profu;
+        this.studenti = studenti;
+        this.note_studenti = note;
+        this.an = an;
+    }
+
+    public Curs(String[] nume_descriere, Profesor prof, Set<Student> studenti) {
+        this.nume = nume_descriere[0];
+        this.descriere = nume_descriere[1];
+        this.profu = prof;
+        this.studenti = studenti;
     }
 
     @Override
@@ -158,10 +172,6 @@ public class Curs implements OperatiiCurs{
         return studenti.size();
     }
 
-    public void DeleteProf() {
-        this.profu=null;
-    }
-
     public void PrintStudAndNote() {
         for(Student student: note_studenti.keySet())
             System.out.println(student.getNume()+" "+student.getPrenume()+ ": "+ note_studenti.get(student));
@@ -171,6 +181,19 @@ public class Curs implements OperatiiCurs{
         System.out.println("Studentii inscrisi la cursul de " + nume +" :\n");
         for(Student student:studenti)
             System.out.println(" "+ student);
+    }
+
+    public ArrayList<String> studenti_de_la_curs() {
+        String[] list = new String[studenti.size()];
+        System.out.println("Studentii de la cursul de "+ this.nume+" ");
+        int i = 1;
+        for (Student student : studenti) {
+            System.out.println(i + ". " + student.getNume() + " " + student.getPrenume() + ",grupa: " +student.grupa+",: " + note_studenti.get(student));
+            list[i-1] = i + ". " + student.getNume() + " " + student.getPrenume();
+            i++;
+        }
+        System.out.println(i + ". " + " Intoarcete la vizualizare cursuri");
+        return new ArrayList<String>(Arrays.asList(list));
     }
 
     @Override
@@ -199,19 +222,31 @@ public class Curs implements OperatiiCurs{
         this.nume=nume;
     }
 
-    public void UpdateDescrCurs(String nume) {
+    public void UpdateDescriereCurs(String nume) {
         this.descriere=nume;
     }
 
-    public void AddNotaToStud(Student student, Integer nota)	{
-        if(numar_studenti()!=0)	{
-            if(note_studenti.containsKey(student))
+    public void AddNotaToStud(Student student, int nota)	{
+        if(note_studenti.containsKey(student))
                 note_studenti.replace(student, nota);
-        }
+        else
+            note_studenti.put(student,nota);
     }
 
     public double media_stud_double() {
         return (double)suma_note_stud()/numar_studenti();
+    }
+
+    public int compareTo(Curs c) {
+        if (this.nume.compareTo(c.nume) < 0)
+            return -1;
+        else if (this.nume.compareTo(c.nume) > 0)
+            return 1;
+            else
+                if(this.an>c.an)
+                    return -1;
+                else
+                    return 0;
     }
 
     public int suma_note_stud() {
@@ -221,17 +256,19 @@ public class Curs implements OperatiiCurs{
         return suma;
     }
 
+    public Set<Student> getStudenti() {
+        return studenti;
+    }
+
     public void PrintStudPeGrupe(){
-        System.out.println("Lista cu grupele studentilor de la cursul de "+ nume);
-        for(Integer g: grupe_studenti.keySet())
-            System.out.println("Grupa " +g+": "+ grupe_studenti.get(g));
+        System.out.println("Lista cu grupele studentilor de la cursul de "+ this.nume);
+        for(Integer grupa: grupe_studenti.keySet())
+            System.out.println("Grupa " +grupa+": "+ grupe_studenti.get(grupa));
     }
 
     public Profesor GetProf() {	return profu;	}
 
-    public String GetNume() {
-        return nume;
-    }
+    public String GetNume() {   return nume;  }
 
     public String GetNumeProf() { return  profu.GetNume(); }
 
@@ -286,5 +323,14 @@ public class Curs implements OperatiiCurs{
                 return (Integer) nota;
         }
         return 0;
+    }
+
+    Curs(String nume){
+        this.nume=nume;
+        this.descriere=null;
+        this.an=0;
+        this.studenti=new HashSet<Student>();
+        this.note_studenti= new HashMap<>();
+        this.grupe_studenti=new HashMap<>();
     }
 }

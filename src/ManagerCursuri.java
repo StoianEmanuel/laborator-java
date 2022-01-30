@@ -7,8 +7,16 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
         cursuri = new ArrayList<Curs>();
     }
 
+    public ManagerCursuri(Curs[] cursuri){
+        this.cursuri = Arrays.asList(cursuri);
+    }
+
     public void AddCurs(Curs curs) {
         cursuri.add(curs);
+    }
+
+    public void setCurs(Curs[] c)    {
+        this.cursuri = new ArrayList<>(Arrays.asList(c));
     }
 
     public void UpdateCurs (Curs curs_v, Curs curs_n) throws Exception{
@@ -23,9 +31,12 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
         }
     }
 
+    public List<Curs> getCursuri() {
+        return cursuri;
+    }
+
     public void AfiseazaCursuriLaConsola()	{
-        for(Curs c : cursuri)
-        {
+        for(Curs c : cursuri)    {
             System.out.println(c.nume + "  "+c.descriere+":\n");
             try{
                 c.PrintStud();
@@ -35,6 +46,21 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
             }
             System.out.println();
         }
+    }
+
+    public void media_notelor_date_de_profesor(Profesor p) {
+        int i = 0;
+        double medie = 0;
+        for(Curs c : this.cursuri)
+        {
+            if(c.GetProf().equals(p))
+            {
+                medie += c.media_stud_double();
+                i++;
+            }
+        }
+        double media = i == 0 ? 0 : medie/(double) i;
+        System.out.println("Media notelor data de profesorul " + p.nume + p.prenume + ": " + media);
     }
 
     public void DeleteCurs(Curs curs) throws Exception{
@@ -66,7 +92,7 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
         for(int i=0;i<numar_cursuri();i++)
             if(cursuri.get(i).descriere==vechi)	{
                 Curs curs=cursuri.get(i);
-                curs.UpdateDescrCurs(nou);
+                curs.UpdateDescriereCurs(nou);
                 cursuri.set(i, curs);
             }
     }
@@ -188,18 +214,6 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
         return i;
     }
 
-    public void MediaProfesor(Profesor profesor) {
-        double suma=0;
-        int nr=0;
-        for(Curs curs:cursuri)
-            if(curs.GetProf()==profesor) {
-                suma+=curs.media_stud_double();
-                nr++;
-            }
-        double media = nr == 0 ? 0 : suma / (double)nr;
-        System.out.println("Mediat notelor date de profesorul " + profesor.formatForDisplay() + " este: " + media );
-    }
-
     public int numar_cursuri() 	{
         return cursuri.size();
     }
@@ -222,7 +236,18 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
         Collections.sort(cursuri,compara);
     }
 
-    private Curs search(Curs unCurs) throws Exception {
+    public ArrayList<String> StudentiCurs(Curs curs) {
+        int index = -1, pos = 0;
+        for (Curs c : cursuri) {
+            index++;
+            if (c.compareTo(curs) == 0) {
+                pos = index;
+            }
+        }
+        return cursuri.get(pos).studenti_de_la_curs();
+    }
+
+    public Curs search(Curs unCurs) throws Exception {
         int i = cursuri.indexOf(unCurs);
         if ( i != -1 ) {
             return cursuri.get(i);
@@ -232,12 +257,107 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
         }
     }
 
-    public List<Curs> getCursuri_for_a_student(Student student){
+    public List<Curs> cursuri_student(Student student){
         List<Curs> lista_cursuri= new ArrayList<Curs>();
         for(Curs curs:cursuri)
             if(curs.FindStudent(student)){
                 lista_cursuri.add(curs);
             }
         return lista_cursuri;
+    }
+
+    public ArrayList<String> cursuri_profesor(Profesor profesor)
+    {
+        int i = 1;
+        ArrayList<String> list = new ArrayList<String>();
+        for(Curs c : cursuri)
+        {
+            if(c.profu.equals(profesor))
+            {
+                System.out.println(i + ". " + c.nume);
+                list.add(c.nume);
+                i++;
+            }
+        }
+        System.out.println(i + ". " + "Inchidere program");
+        return list;
+    }
+
+    public Curs[] getCursuriArray() {
+        Curs[] c = new Curs[cursuri.size()];
+        c = cursuri.toArray(c);
+        return c;
+    }
+
+    public String anul_studentului(Student student)
+    {
+        for(Curs curs : cursuri)   {
+            if(curs.FindStudent(student))
+            {
+                Student[] students = curs.studenti.toArray(new Student[curs.studenti.size()]);
+                ArrayList<Student> s = new ArrayList<>(Arrays.asList(students));
+                String an = String.valueOf(s.get(s.indexOf(student)).anul);
+                return an;
+            }
+        }
+        return null;
+    }
+
+    public String[] SerchStudent(Student student)
+    {
+        String restanta = null;
+        String[] line = new String[cursuri.size()];
+        for (Curs c : cursuri)
+        {
+            if(c.FindStudent(student))
+            {
+                if(c.note_studenti.get(student) == null)     {
+                    restanta = "";
+                }
+                else
+                if (c.note_studenti.get(student) == 0)        {
+                    restanta = c.note_studenti.get(student).toString();
+                }
+                else
+                if(c.note_studenti.get(student) < 5)    {
+                    restanta = c.note_studenti.get(student).toString() + " Restanta";
+                }
+                else
+                {
+                    restanta = c.note_studenti.get(student).toString();
+                }
+                line[cursuri.indexOf(c)] = c.nume + ": " + restanta;
+            }
+        }
+        return line;
+    }
+
+    public void MedieCurs(Curs curs)
+    {
+        Curs c;
+        try        {
+            c = this.search(curs);
+            System.out.println("Media studentilor la cursul: " + c.nume + " este: " + c.media_stud_double());
+        }
+        catch (Exception e)      {
+            System.out.println("Cursul nu a fost gasit!");
+        }
+    }
+
+    public double MediaStudent(Student student)
+    {
+        double medie = 0;
+        int nr = 0;
+        for(Curs curs : cursuri)
+        {
+            if(curs.FindStudent(student))     {
+                medie += curs.note_studenti.get(student) != null ? curs.note_studenti.get(student) : 0;
+                nr++;
+            }
+        }
+        if(nr!=0)
+            return medie/nr;
+        else
+            return 0;
     }
 }

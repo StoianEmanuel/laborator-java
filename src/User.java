@@ -8,14 +8,14 @@ public class User {
     public String userName;
     public String password;
     public MenuStrategy menuStrategy;
-    public User() {
-
-    }
+    public User() { }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof User))
+            return false;
         User user = (User) o;
         return Objects.equals(userName, user.userName) && Objects.equals(password, user.password);
     }
@@ -32,7 +32,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{ userName= " + userName + '\'' + ", password='" + password + '\'' + '}';
+        return "User { userName= " + userName + '\'' + ", password='" + password + '\'' + " }";
     }
 
     public User(String userName, String password, MenuStrategy accountType) {

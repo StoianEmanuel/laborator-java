@@ -6,4 +6,5 @@ public interface MenuStrategy {
     String[] getAccountMenuOptions();
     void nextMenuOption();
     void previousMenuOption();
+    void menuOption();
 }

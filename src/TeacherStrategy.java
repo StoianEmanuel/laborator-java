@@ -1,10 +1,10 @@
-import javax.swing.*;
 import java.beans.XMLDecoder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class TeacherStrategy implements MenuStrategy {
     public Profesor profesor;
@@ -66,21 +66,56 @@ public class TeacherStrategy implements MenuStrategy {
 
     @Override
     public void nextMenuOption() {
-        JFrame owner= new JFrame("ProfesorInterface");
-        ProfesorForm profesorForm=new ProfesorForm(owner,getUser(profesor.nume,profesor.prenume));
-        owner.setContentPane(profesorForm.getMainPanel());
-        owner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        owner.pack();
-        owner.setVisible(true);
     }
 
     @Override
     public void previousMenuOption() {
-        JFrame frame= new JFrame("LoginForm");
-        LoginForm loginForm = new LoginForm(frame);
-        frame.setContentPane(loginForm.getMainPanel());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+    }
+
+    @Override
+    public void menuOption() {
+        System.out.println("Cursuri: ");
+        ArrayList<String> list = Application.getInstance().manager.cursuri_profesor(profesor);
+        int index,x, i;
+        boolean ok = false;
+        try (Scanner cin = new Scanner(System.in)) {
+            do {
+                if (!ok) {
+                    ok = true;
+                }
+                else {
+                    System.out.println("Cursuri: ");
+                    Application.getInstance().manager.cursuri_profesor(profesor);
+                }
+                index = cin.nextInt();
+                if (index != list.size() + 1) {
+                    String nume_curs = list.get(index - 1);
+                    ArrayList<String> listStudents = Application.getInstance().manager.StudentiCurs(new Curs(nume_curs));
+                    int index_curs = Application.getInstance().manager.getCursuri().indexOf(new Curs(nume_curs));
+                    do {
+                        x = cin.nextInt();
+                        i = 1;
+                        if (x != listStudents.size() + 1) {
+                            Student s = new Student(listStudents.get(x - 1).split(" ")[1], listStudents.get(x - 1).split(" ")[2]);
+                            System.out.println("Noteaza studentul ( numere intregi ):");
+                            x = cin.nextInt();
+                            if (x != 11)
+                                Application.getInstance().manager.getCursuri().get(index_curs).AddNotaToStud(s, x);
+                            for (Student student : Application.getInstance().manager.getCursuri().get(index_curs).studenti) {
+                                System.out.println(i + ". " + student.nume + " " + student.prenume + ": " + Application.getInstance().manager.getCursuri().get(index_curs).note_studenti.get(student));
+                            }
+                            System.out.println(listStudents.size() + 1 + ". " + "Intoarecere la vizualizare cursuri");
+                        }
+                    } while (x != listStudents.size() + 1);
+                }
+            }
+            while (index != list.size() + 1);
+            Application.getInstance().displayManager.displayCourses(Application.getInstance().manager.getCursuriArray());
+            if(index == list.size() + 1)  {
+                System.out.println("\nProcesul s-a incheiat");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

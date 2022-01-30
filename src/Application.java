@@ -1,20 +1,25 @@
 import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Application {
-    private static Application single_instance = null;
+    private static Application singleInstance = null;
     private List<User> userList = new ArrayList<>();
     public User currentUser = null;
+    public IDataLoader dataLoader = null;
+    public IDisplayManager displayManager = null;
+    public ManagerCursuri manager = new ManagerCursuri();
 
     static Application getInstance() {
-        if ( single_instance == null) {
-            single_instance = new Application();
+        if ( singleInstance == null) {
+            singleInstance = new Application();
         }
-        return  single_instance;
+        return  singleInstance;
     }
 
     public void printUsers(){
@@ -24,31 +29,6 @@ public class Application {
     }
 
     private Application() {
-         /* HardcodatDataManager dataManager = new HardcodatDataManager();
-        var studenti = dataManager.dataSetOfStudent;
-        var profesori = dataManager.dataSetOfProfesor;
-        this.userList.add(new User("aaa", "aaa", new StudentStrategy( studenti[r.nextInt(studenti.length)])));
-        this.userList.add(new User("bbb", "aaa", new TeacherStrategy( profesori[r.nextInt(profesori.length)])));
-        this.userList.add(new User("ccc", "ccc", new StudentStrategy( studenti[r.nextInt(studenti.length)])));
-        this.userList.add(new User("ddd", "ddd", new TeacherStrategy( profesori[r.nextInt(profesori.length)])));
-        this.userList.add(new User("eee", "eee", new StudentStrategy( studenti[r.nextInt(studenti.length)])));
-        try {
-            FileOutputStream fos = new FileOutputStream("users.xml");
-            XMLEncoder encoder = new XMLEncoder(fos);
-            encoder.setExceptionListener(new ExceptionListener() {
-                @Override
-                public void exceptionThrown(Exception e) {
-                    System.out.println("Exception:" + e.toString());
-                }
-            });
-            encoder.writeObject(userList);
-            encoder.close();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } */
         this.initUsers();
     }
 
@@ -57,6 +37,7 @@ public class Application {
             XMLDecoder decoder = new XMLDecoder(fis);
             this.userList = (ArrayList<User>)decoder.readObject();
             decoder.close();
+            fis.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -68,8 +49,29 @@ public class Application {
         int index = userList.indexOf(user);
         if ( index != -1 ) {
             Application.getInstance().currentUser = userList.get(index);
+            Application.getInstance().dataLoader = Settings.dataloader.get(Settings.loadType);
+            Application.getInstance().displayManager = Settings.displayloader.get(Settings.displayType);
+            Application.getInstance().manager.setCurs(dataLoader.createCoursesData());
         } else {
-            throw new Exception("Username sau parola este gresita!");
+            throw new Exception("Username-ul sau parola este gresita!");
+        }
+    }
+
+    public void noi_utilizatori(String username, String password, MenuStrategy menuStrategy)
+    {
+        this.initUsers();
+        userList.add(new User(username,password,menuStrategy));
+        try(FileOutputStream fos = new FileOutputStream("src/users.xml")) {
+            XMLEncoder encoder = new XMLEncoder(fos);
+            encoder.writeObject(userList);
+            encoder.close();
+            fos.close();
+        }
+        catch (FileNotFoundException e)    {
+            e.printStackTrace();
+        }
+        catch (IOException e)    {
+            e.printStackTrace();
         }
     }
 }

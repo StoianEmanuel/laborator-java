@@ -1,11 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.XMLDecoder;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class LoginForm {
     private JPanel mainPanel;
@@ -14,64 +9,33 @@ public class LoginForm {
     private JPasswordField txtPassword;
     private JLabel lblPassword;
     private JButton btnLogin;
-    private JButton btnSignUp;
     private JFrame owner;
-
-    private ArrayList<User> userList;
-
-    void update_userList() {
-        try (FileInputStream fis = new FileInputStream("src/users.xml")) {
-            XMLDecoder decoder = new XMLDecoder(fis);
-            this.userList = (ArrayList<User>) decoder.readObject();
-            decoder.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    User return_user(String username, String password){
-        for(User user:userList)
-            if(user.userName==username && user.password==password)
-                return user;
-        return null;
-    }
 
     public LoginForm(JFrame owner) {
         this.owner = owner;
-        this.update_userList();
+
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if ( e.getSource() == btnLogin) {
+                    if(txtUsername.getText()!=null && txtPassword.getPassword()!=null)
                     try {
                         Application.getInstance().login(new User(txtUsername.getText(), new String(txtPassword.getPassword())));
-                        JOptionPane.showMessageDialog(null, "Login successfully!");
-                        mainPanel.setVisible(false);
-                        User user= return_user(txtUsername.getText(),txtPassword.getPassword().toString());
-                        if(user.menuStrategy.getClass().getName()=="TeacherStrategy") {
-                            owner.setContentPane(new ProfesorForm(owner, user).getMainPanel());
+                        if(Application.getInstance().currentUser.menuStrategy.getAccountType() == UserAccountType.STUDENT)
+                        {
+                            mainPanel.setVisible(false);
+                            owner.setContentPane(new StudentForm(owner).getMainPanel());
                         }
-                        else {
-                            owner.setContentPane(new StudentForm(owner, user).getMainPanel());
-                        }
+                        else
+                            if(Application.getInstance().currentUser.menuStrategy.getAccountType()==UserAccountType.TEACHER) {
+                                mainPanel.setVisible(false);
+                                owner.setContentPane(new ProfesorForm(owner).getMainPanel());
+                                owner.setTitle("Welcome: " + Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().keySet().toString() + " " + Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().values().toString());
+                            }
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                        JOptionPane.showMessageDialog(null,ex.getMessage(),"Campuri goale",JOptionPane.WARNING_MESSAGE);
                     }
                 }
-            }
-        });
-
-        btnSignUp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame owner= new JFrame("SignUpInterface");
-                SignUpForm signUpForm= new SignUpForm(owner);
-                owner.setContentPane(signUpForm.getMainPanel());
-                owner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                owner.pack();
-                owner.setVisible(true);
             }
         });
     }

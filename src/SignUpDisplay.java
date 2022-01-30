@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
@@ -32,11 +30,11 @@ public class SignUpDisplay {
         return creare_user;
     }
 
-    public SignUpForm(String username, String password, String nume, String prenume, String tip_cont) {
+    public SignUpDisplay(String username, String password, String nume, String prenume, String tip_cont) {
         //verific sa nu existe user-ul
         creare_user=false;
         List<User> userList = new ArrayList<>();
-        File inputfile = new File("user.xml");
+        File inputfile = new File("src/user.xml");
         try (FileInputStream fis = new FileInputStream(inputfile)) {
             XMLDecoder decoder = new XMLDecoder(fis);
             userList = (ArrayList<User>) decoder.readObject();
@@ -44,7 +42,7 @@ public class SignUpDisplay {
             fis.close();
             for (User user : userList)
                 if (user.userName == username) {
-                    System.out.println("Acest utilizator exista");
+                    System.out.println("Acest utilizator exista ");
                     break;
                 }
         } catch (FileNotFoundException exception) {

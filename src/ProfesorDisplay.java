@@ -60,7 +60,7 @@ public class ProfesorDisplay {
     public void displaycursuri(){
         String s="";
         for(Curs c:cursuri_profesor){
-            s+=" "+c.nume+", descrierea cursului: "+c.descriere+"\nStudenti: ";
+            s+=" "+c.nume+", descrierea cursului: "+c.descriere+" anul"+ c.an+ "\nStudenti: ";
             int i=0;
             for(Student student:c.studenti){
                 s+=student.toString();

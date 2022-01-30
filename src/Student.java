@@ -41,6 +41,19 @@ public class Student extends Persoana implements Comparator<Student>{
         return "Student : {" + "nume= " + nume + ", prenume= " + prenume + ", grupa= " + grupa + ", anul= " + anul + " } ";
     }
 
+    public Student(String[] splituri)  {
+        this.nume = splituri[0];
+        this.prenume = splituri[1];
+        this.grupa = Integer.parseInt(splituri[2]);
+    }
+
+    Student(String nume, String prenume, int anul){
+        this.nume=nume;
+        this.prenume=prenume;
+        this.anul=anul;
+        this.grupa=0;
+    }
+
     public String getNume() {
         return nume;
     }
@@ -117,7 +130,7 @@ public class Student extends Persoana implements Comparator<Student>{
     }
 
     public boolean CompareByNameAndPrenume(Student student){
-        if(this.nume==student.nume && this.prenume==student.prenume)
+      if(this.nume.equals(student.nume) && this.prenume.equals(student.prenume))
             return true;
         return false;
     }

@@ -1,160 +1,98 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.ExceptionListener;
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ProfesorForm {
     private JLabel lblUsername;
     private JPanel mainPanel;
     private JTextField txtUsername;
-    private JButton btnCursuri;
-    private JButton btnNote;
+    private JButton btnNoteaza;
     private JButton btnStudenti;
-    private JTextArea txtArea;
-    private JButton btnNotare;
-    private JTextArea txtNume;
-    private JLabel lblNume;
-    private JLabel lblNota;
-    private JSpinner SpinNota;
-    private JTextArea txtPrenume;
-    private JLabel lblPrenume;
-    private JTextArea txtCurs;
-    private JLabel lblCurs;
+
+    private JList listNote;
+    private JList listCursuri;
+    private JList listStudenti;
+    private JLabel lblStudenti;
     private JFrame owner;
-    private User user;
-    private ArrayList<Curs> cursuri_profesor;
-    private ArrayList<Curs> toate_cursurile;
-    public Profesor profesor;
 
-    void visible_invisible(boolean b){
-        SpinNota.setVisible(b);
-        lblNume.setVisible(b);
-        lblPrenume.setVisible(b);
-        txtNume.setVisible(b);
-        txtPrenume.setVisible(b);
-        lblNota.setVisible(b);
-        btnNotare.setVisible(b);
-        lblCurs.setVisible(b);
-        txtCurs.setVisible(b);
-    }
-
-    void noteaza_student(Student student, String nota){
-        try {
-            FileOutputStream fos = new FileOutputStream("src/cursuri.xml");
-            XMLEncoder encoder = new XMLEncoder(fos);
-            encoder.setExceptionListener(new ExceptionListener() {
-                @Override
-                public void exceptionThrown(Exception e) {
-                    System.out.println(e);
-                }
-            });
-            encoder.writeObject(toate_cursurile);
-            encoder.close();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public ProfesorForm(JFrame owner, User userul){
+    public ProfesorForm(JFrame owner){
         this.owner=owner;
-        this.user=userul;
-        txtUsername.setText(user.userName);
-        TeacherStrategy menuStrategy= (TeacherStrategy) user.menuStrategy;
-        profesor=menuStrategy.returnProfesor();
+        txtUsername.setText(Application.getInstance().currentUser.userName);
 
-        try(FileInputStream fis = new FileInputStream("src/cursuri.xml")) {
-            XMLDecoder decoder = new XMLDecoder(fis);
-            cursuri_profesor = (ArrayList<Curs>) decoder.readObject();
-            decoder.close();
-            fis.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        toate_cursurile=cursuri_profesor;
-        ArrayList<Curs> curs= new ArrayList<>();
-        for(Curs c:cursuri_profesor)
-            if(c.profu==profesor)
-                curs.add(c);
-        cursuri_profesor=curs;
-
-        btnCursuri.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                txtArea.setText("");
-                visible_invisible(false);
-                String s="";
-                for(Curs c:cursuri_profesor){
-                    s+=" "+c.nume+", descrierea cursului: "+c.descriere+"\nStudenti: ";
-                    int i=0;
-                    for(Student student:c.studenti){
-                        s+=student.toString();
-                        i++;
-                        if(i%2==0 && i!=0)
-                            s+="\n";
-                    }
+        String[] list = new String[Application.getInstance().manager.getCursuri().size()];                                                                  String[] note = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};listCursuri.setListData(note);
+        for (String s : Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().keySet()) {
+            String prenume = Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().get(s);
+            int i = 0;
+            for (Curs c : Application.getInstance().manager.getCursuri()) {
+                if (c.profu.nume.equals(s) && c.profu.prenume.equals(prenume)) {
+                    list[i] = c.nume;
+                    i++;
                 }
-                txtArea.setText(s);
             }
-        });
-
-        btnNote.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                visible_invisible(true);
-                SpinnerModel value = new SpinnerNumberModel(10, 1, 10, 1);
-                SpinNota= new JSpinner(value);
-            }
-        });
+        }
+        listCursuri.setListData(list);
 
         btnStudenti.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                txtArea.setText("");
-                visible_invisible(false);
-                String s="";
-                for(Curs c:cursuri_profesor){
-                    s+=" "+c.nume+"\nStudenti: ";
-                    for(Student student:c.studenti){
-                        s+=student.toString()+", nota: "+c.note_studenti.get(student)+"\n";
+                if (e.getSource() == btnStudenti) {
+                    if (listCursuri.getSelectedIndex() != -1) {
+                        lblStudenti.setText("Studenti din " + listCursuri.getSelectedValue());
+                        try {
+                            int i = 0;
+                            Curs c = Application.getInstance().manager.search(new Curs((String) listCursuri.getSelectedValue()));
+                            String[] list = new String[c.studenti.size()];
+
+                            for (Student s : c.studenti) {
+                                String nota;
+                                if(c.note_studenti.get(s)==null)
+                                    nota=null;
+                                else
+                                    nota=c.note_studenti.get(s).toString();
+                                list[i] = s.nume + " " + s.prenume + " nota: " + nota;
+                                i++;
+                            }
+                            listStudenti.setListData(list);
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage());
+                        }
                     }
                 }
-                txtArea.setText(s);
             }
         });
 
-        btnNotare.addActionListener(new ActionListener() {
+        btnNoteaza.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int index=0;
-                for(;index<toate_cursurile.size();index++){
-                    Curs c=toate_cursurile.get(index);
-                    if(c.nume==txtCurs.getText()){
-                        if(c.FindByNumeAndPrenume(txtNume.getText(),txtPrenume.getText())){
-                            for(Student s:c.studenti)
-                                if(s.nume==txtNume.getText() && s.prenume==txtPrenume.getText())
-                                    if(c.note_studenti.get(s)==0) {
-                                            String nota=SpinNota.getValue().toString();
-                                            c.note_studenti.replace(s,Integer.parseInt(nota));
-                                            toate_cursurile.set(index,c);
-                                            noteaza_student(s,SpinNota.getValue().toString());
+                if (e.getSource() == btnNoteaza) {
+                    if (listNote.getSelectedIndex() != -1 && listStudenti.getSelectedIndex() != -1 && listCursuri.getSelectedIndex() != -1) {
+                        String data = (String) listStudenti.getSelectedValue();
+                        for (Curs c : Application.getInstance().manager.getCursuri()) {
+                            if (c.equals(new Curs((String) listCursuri.getSelectedValue()))) {
+                                try {
+                                    c.AddNotaToStud(new Student((String) ((String) listStudenti.getSelectedValue()).split(" ")[0], (String) ((String) listStudenti.getSelectedValue()).split(" ")[1]), Integer.parseInt((String) listNote.getSelectedValue()));
+                                    try {
+                                        Curs curs = Application.getInstance().manager.search(new Curs((String) listCursuri.getSelectedValue()));
+                                        String[] list = new String[curs.studenti.size()];
+                                        int nr = 0;
+                                        for (Student s : curs.studenti) {
+                                            String nota = curs.note_studenti.get(s) == null ? " " : curs.note_studenti.get(s).toString();
+                                            list[nr++] = s.nume + " " + s.prenume + " nota: " + nota;
                                         }
+                                        listStudenti.setListData(list);
+                                    } catch (Exception ex) {
+                                        JOptionPane.showMessageDialog(null, ex.getMessage());
                                     }
+                                    Application.getInstance().displayManager.displayCourses(Application.getInstance().manager.getCursuriArray());
+                                } catch (Exception ex) {
+                                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                                }
+                            }
                         }
                     }
-                visible_invisible(false);
+                }
             }
         });
     }

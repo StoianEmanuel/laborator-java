@@ -3,12 +3,31 @@
   <component name="ChangeListManager">
     <list default="true" id="c3675ed5-978f-4bb6-a7c2-6a11e63472a9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Curs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Curs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FileDataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileDataManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FileDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HardcodatDataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HardcodatDataManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LoginDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginDisplay.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/LoginForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ManagerCursuri.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ManagerCursuri.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MenuStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MenuStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProfesorDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProfesorDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProfesorForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProfesorForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProfesorForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProfesorForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Settings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SignUpDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignUpDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SignUpForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignUpForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SignUpForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignUpForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StudentDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StudentForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StudentForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StudentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TeacherForm.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TeacherStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TeacherStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,65 +160,13 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/StudentForm.java</url>
-          <line>72</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/StudentForm.java</url>
-          <line>73</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>61</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>62</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/StudentForm.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/StudentForm.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/StudentForm.java</url>
-          <line>88</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/StudentForm.java</url>
-          <line>84</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/StudentForm.java</url>
-          <line>53</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/StudentForm.java</url>
-          <line>57</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/StudentForm.java</url>
-          <line>52</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="this" />
+        <watch expression="this" />
+        <watch expression="this" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Application_java$Main.ic" NAME="Main Coverage Results" MODIFIED="1643482083814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

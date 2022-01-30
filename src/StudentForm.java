@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.XMLDecoder;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -11,196 +8,29 @@ public class StudentForm {
     private JPanel mainPanel;
     private JLabel lblUsername;
     private JTextField txtUsername;
-    private JButton btnCursuri;
-    private JButton btnNote;
     private JButton btnMedieAn;
-    private JButton btnRestante;
-    private JTextArea txtArea;
+    private JList listCursuri;
     private JFrame owner;
-    private User user;
-    private Curs[] students;
 
-    public static <K, V extends Comparable<V> > Map<K, V> valueSort(final Map<K, V> map)
-    {
-        Comparator<K> valueComparator = new Comparator<K>() {
-            public int compare(K k1, K k2)   {
-                int comp = map.get(k1).compareTo(map.get(k2));
-                if (comp == 0)
-                    return 1;
-                else
-                    return comp;
-            }
-        };
-        Map<K, V> sorted = new TreeMap<K, V>(valueComparator);
-        sorted.putAll(map);
-        return sorted;
-    }
-
-    private TreeMap<String,Integer> cursuri;
-    private TreeMap<String,Integer> note;
-    public Student student;
-
-    void initiere(){
-        TreeMap cursurile=new TreeMap<String,Integer>();
-        for(Curs curs:students) {
-            System.out.println(curs.studenti);
-            if (curs.ReturnStudent(student.nume, student.prenume) != null) {
-                System.out.println(cursuri.size());
-                cursurile.put(curs.nume, curs.an);
-            }
-            int ok=0;
-            for(Student stud: curs.studenti)
-                if(stud.CompareByNameAndPrenume(student))
-                {
-                    cursurile.put(curs.nume,curs.an);
-                    ok=1;
-                }
-                cursuri=cursurile;
-        }
-
-        note=new TreeMap<String,Integer>();
-        for(Curs curs:students)
-            if(curs.FindByNumeAndPrenume(student.nume,student.prenume)==true) {
-                note.put(curs.nume, curs.nota_student(student.nume, student.prenume));
-            }
-    }
-
-    public StudentForm(JFrame owner, User userul){
+    public StudentForm(JFrame owner){
         this.owner=owner;
-        this.user=userul;
-
-        txtUsername.setText(user.userName);
-        StudentStrategy menuStrategy= (StudentStrategy) user.menuStrategy;
-        student=menuStrategy.returnStudent();
-
-            try(FileInputStream fis = new FileInputStream("src/cursuri.xml")) {
-                XMLDecoder decoder = new XMLDecoder(fis);
-                students = (Curs[]) decoder.readObject();
-                decoder.close();
-                fis.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println(student);
-
-            initiere();
-            if(cursuri.isEmpty())
-                System.out.println("eroe");
-            System.out.println("Initial Mappings are: "
-                + cursuri);
-
-        btnCursuri.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                txtArea.setText(null);
-                /*TreeMap<String,Integer> display=new TreeMap();
-                for(Curs curs:students)
-                    if(curs.FindByNumeAndPrenume(student.nume,student.prenume))
-                        display.put(curs.nume,curs.an);*/
-
-                Map<String,Integer> sortedMap = valueSort(cursuri);
-                int anul=1;
-                String s="Anul 1: \n";
-                for (Map.Entry<String, Integer> entry1 : sortedMap.entrySet()) {
-                    String key1= entry1.getKey();
-                    Integer value1 = entry1.getValue();
-                    if((int)value1!=anul){
-                        s+="Anul "+ anul+":\n";
-                        anul++;
-                    }
-                    s+=" "+key1+"\n";
-                }
-
-                txtArea.setText(s);
-            }
-        });
-
-        btnNote.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                txtArea.setText("");
-                /*TreeMap<String,Integer> display=new TreeMap(); for(Curs curs:students)
-                    if(curs.FindByNumeAndPrenume(student.nume,student.prenume))    display.put(curs.nume,curs.nota_student(student.nume,student.prenume));*/
-
-                Map<String, Integer> sortedMap= valueSort(cursuri);
-                Map<String, Integer> map= valueSort(note);
-
-                int anul=1;
-                String s="Anul 1: \n";
-                for (Map.Entry<String, Integer> entry1 : sortedMap.entrySet()) {
-                    String key1 = entry1.getKey();
-                    Integer value1 = entry1.getValue();
-                    Integer value2 = map.get(key1);
-                    if ((int) value1 != anul) {
-                        s += "Anul " + anul + ":\n";
-                        anul++;
-                    }
-                    s += " " + key1 + ": " + value2 + "\n";
-                }
-
-                txtArea.setText(s);
-            }
-        });
+        for(String s : Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().keySet()) {
+            String prenume = Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().get(s);
+            String[] list = Application.getInstance().manager.SerchStudent(new Student(s,prenume));
+            listCursuri.setListData(list);
+        }
+        txtUsername.setText(Application.getInstance().currentUser.userName);
 
         btnMedieAn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Map<String, Integer> sortedMap= valueSort(cursuri);
-                Map<String, Integer> map= valueSort(note);
-                ArrayList<Float> medie_an= new ArrayList<>();
-
-                int anul=1,suma=0,numar_cursuri=0;
-                String s="";
-                for (Map.Entry<String, Integer> entry1 : sortedMap.entrySet()) {
-                    String key1 = entry1.getKey();
-                    Integer value1 = entry1.getValue();
-                    Integer value2 = map.get(key1);
-                    suma+=value2;
-                    numar_cursuri++;
-                    if ((int) value1 != anul) {
-                        anul++;
-                        Float f= (float) suma / numar_cursuri;
-                        medie_an.add(f);
-                        suma=0;
-                        numar_cursuri=0;
+                if(e.getSource() == btnMedieAn)
+                {
+                    for(String s : Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().keySet()) {
+                        String prenume = Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().get(s);
+                        JOptionPane.showMessageDialog(null,"Media pe acest an universitar este: " + Application.getInstance().manager.MediaStudent(new Student(s,prenume)));
                     }
                 }
-
-                Float f= (float) suma / numar_cursuri;
-                medie_an.add(f);
-
-                anul=1;
-                for (Float media:medie_an){
-                    s+=" Anul "+anul+": Media"+ media+"\n";
-                    anul++;
-                }
-                txtArea.setText(s);
-            }
-        });
-
-        btnRestante.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                txtArea.setText("");
-                Map<String, Integer> map= valueSort(note);
-
-                int i=0;
-                String s="Restante: ";
-                for (Map.Entry<String, Integer> entry1 : map.entrySet()) {
-                    String key1 = entry1.getKey();
-                    Integer value1 = entry1.getValue();
-                    if(value1<5)   {
-                        i++;
-                        s += " " + key1 + " ( nota: " +value1+ ")\n";
-                    }
-                }
-                if(i==0)
-                    s+=" nu exista";
-
-                txtArea.setText(s);
             }
         });
     }

@@ -2,6 +2,9 @@ import java.beans.XMLDecoder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 public class FileDataManager implements IDataLoader{
     @Override
@@ -53,5 +56,21 @@ public class FileDataManager implements IDataLoader{
             e.printStackTrace();
         }
         return new Curs[0];
+    }
+
+    public ManagerCursuri manager = new ManagerCursuri(createCoursesData());
+    public Random rand = new Random();
+    public int minimumRequiredStudents = 5;
+    public Student[] dataSetOfStudent = createStudentsData();
+    public Profesor[] dataSetOfProfesor = createProfesorData();
+
+    public Set<Student> set_aleator_de_student() {
+        int studentInscrisiLaCurs = minimumRequiredStudents + rand.nextInt(dataSetOfStudent.length - minimumRequiredStudents);
+        Set<Student> setOfStudents = new HashSet<>();
+        for (int i = 0; i < studentInscrisiLaCurs; i++) {
+            int randomStudentIndex = rand.nextInt(dataSetOfStudent.length);
+            setOfStudents.add(dataSetOfStudent[randomStudentIndex]);
+        }
+        return setOfStudents;
     }
 }

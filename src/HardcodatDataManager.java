@@ -5,8 +5,8 @@ public class HardcodatDataManager implements IDataLoader {
     // Obiectul rand genereaza numere aleatorii. Folosit in programul de testare
     public Random rand = new Random();
     public int minimumRequiredStudents = 5;
-    public Student[] dataSetOfStudent = createStudentsData();
-    public Profesor[] dataSetOfProfesor = createProfesorData();
+    public ArrayList<Student> dataSetOfStudent = new ArrayList<>(Arrays.asList(createStudentsData()));
+    public ArrayList<Profesor> dataSetOfProfesor = new ArrayList<>(Arrays.asList(createProfesorData()));
 
     public HardcodatDataManager() {
         this.createCoursesData();
@@ -38,11 +38,11 @@ public class HardcodatDataManager implements IDataLoader {
     }
 
     public Set<Student> createRandomSetOfStudents() {
-        int studentInscrisiLaCurs = minimumRequiredStudents + rand.nextInt(dataSetOfStudent.length - minimumRequiredStudents);
-        Set<Student> setOfStudents = new HashSet<Student>();
+        int studentInscrisiLaCurs = minimumRequiredStudents + rand.nextInt(dataSetOfStudent.size() - minimumRequiredStudents);
+        Set<Student> setOfStudents = new HashSet<>();
         for (int i = 0; i < studentInscrisiLaCurs; i++) {
-            int randomStudentIndex = rand.nextInt(dataSetOfStudent.length);
-            setOfStudents.add(dataSetOfStudent[randomStudentIndex]);
+            int randomStudentIndex = rand.nextInt(dataSetOfStudent.size());
+            setOfStudents.add(dataSetOfStudent.get(randomStudentIndex));
         }
         return setOfStudents;
     }
@@ -55,14 +55,14 @@ public class HardcodatDataManager implements IDataLoader {
         ArrayList<Curs> cursuri = new ArrayList<>();
         for (String numeCurs : curs) {
             Set<Student> studentsData = createRandomSetOfStudents();
-            Profesor profesor = dataSetOfProfesor[rand.nextInt(dataSetOfProfesor.length)];
+            Profesor profesor = dataSetOfProfesor.get(rand.nextInt(dataSetOfProfesor.size()));
             Curs c = new Curs(numeCurs, descriere, profesor, studentsData, ani[index++]);
             cursuri.add(c);
         }
         return cursuri.toArray(new Curs[cursuri.size()]);
     }
 
-    public void gradeStudents() {
+    public void noteStudenti() {
         for (Curs c: manager.cursuri) {
             for( Student s: c.studenti) {
                 try {
@@ -72,5 +72,16 @@ public class HardcodatDataManager implements IDataLoader {
                 }
             }
         }
+    }
+
+    public Set<Student> createRandomSetOfStudents(int an) {
+        int studentInscrisiLaCurs = minimumRequiredStudents + rand.nextInt(dataSetOfStudent.size() - minimumRequiredStudents);
+        Set<Student> setOfStudents = new HashSet<Student>();
+        for (int i = 0; i < studentInscrisiLaCurs; i++) {
+            int randomStudentIndex = rand.nextInt(dataSetOfStudent.size());
+            if(dataSetOfStudent.get(randomStudentIndex).anul == an)
+                setOfStudents.add(dataSetOfStudent.get(randomStudentIndex));
+        }
+        return setOfStudents;
     }
 }

@@ -1,6 +1,3 @@
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.XMLDecoder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -45,8 +42,9 @@ public class LoginDisplay {
             else {
                 userAccountType=UserAccountType.STUDENT;
             }
+
         } catch (Exception ex) {
-            System.out.println("Login failed! "+ex.getMessage());
+            System.out.println("Login failed! " + ex.getMessage());
         }
     }
 }
