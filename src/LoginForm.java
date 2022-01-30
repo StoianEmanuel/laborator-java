@@ -14,6 +14,7 @@ public class LoginForm {
     private JPasswordField txtPassword;
     private JLabel lblPassword;
     private JButton btnLogin;
+    private JButton btnSignUp;
     private JFrame owner;
 
     private ArrayList<User> userList;
@@ -59,6 +60,18 @@ public class LoginForm {
                         JOptionPane.showMessageDialog(null, ex.getMessage());
                     }
                 }
+            }
+        });
+
+        btnSignUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame owner= new JFrame("SignUpInterface");
+                SignUpForm signUpForm= new SignUpForm(owner);
+                owner.setContentPane(signUpForm.getMainPanel());
+                owner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                owner.pack();
+                owner.setVisible(true);
             }
         });
     }

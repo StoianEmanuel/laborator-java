@@ -96,6 +96,12 @@ public class SignUpForm {
                             } catch (IOException exception) {
                                 exception.printStackTrace();
                             }
+                            JFrame owner= new JFrame("LoginInterface");
+                            LoginForm loginForm=new LoginForm(owner);
+                            owner.setContentPane(loginForm.getMainPanel());
+                            owner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            owner.pack();
+                            owner.setVisible(true);
                         }
                     }
                     else
@@ -124,6 +130,12 @@ public class SignUpForm {
                                     } catch (IOException exception) {
                                         exception.printStackTrace();
                                     }
+                                    JFrame owner= new JFrame("LoginInterface");
+                                    LoginForm loginForm=new LoginForm(owner);
+                                    owner.setContentPane(loginForm.getMainPanel());
+                                    owner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                    owner.pack();
+                                    owner.setVisible(true);
                                 }
                         }
                         else{

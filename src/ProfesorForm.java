@@ -29,8 +29,9 @@ public class ProfesorForm {
     private JLabel lblCurs;
     private JFrame owner;
     private User user;
-    ArrayList<Curs> cursuri_profesor;
-    ArrayList<Curs> toate_cursurile;
+    private ArrayList<Curs> cursuri_profesor;
+    private ArrayList<Curs> toate_cursurile;
+    public Profesor profesor;
 
     void visible_invisible(boolean b){
         SpinNota.setVisible(b);
@@ -69,7 +70,7 @@ public class ProfesorForm {
         this.user=userul;
         txtUsername.setText(user.userName);
         TeacherStrategy menuStrategy= (TeacherStrategy) user.menuStrategy;
-        Profesor profesor=menuStrategy.returnProfesor();
+        profesor=menuStrategy.returnProfesor();
 
         try(FileInputStream fis = new FileInputStream("src/cursuri.xml")) {
             XMLDecoder decoder = new XMLDecoder(fis);

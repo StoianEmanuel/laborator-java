@@ -18,7 +18,7 @@ public class StudentForm {
     private JTextArea txtArea;
     private JFrame owner;
     private User user;
-    Curs[] students;
+    private Curs[] students;
 
     public static <K, V extends Comparable<V> > Map<K, V> valueSort(final Map<K, V> map)
     {
@@ -36,18 +36,26 @@ public class StudentForm {
         return sorted;
     }
 
-    TreeMap<String,Integer> cursuri;
-    TreeMap<String,Integer> note;
-    Student student;
+    private TreeMap<String,Integer> cursuri;
+    private TreeMap<String,Integer> note;
+    public Student student;
 
     void initiere(){
-        cursuri=new TreeMap<String,Integer>();
+        TreeMap cursurile=new TreeMap<String,Integer>();
         for(Curs curs:students) {
             System.out.println(curs.studenti);
             if (curs.ReturnStudent(student.nume, student.prenume) != null) {
                 System.out.println(cursuri.size());
-                cursuri.put(curs.nume, curs.an);
+                cursurile.put(curs.nume, curs.an);
             }
+            int ok=0;
+            for(Student stud: curs.studenti)
+                if(stud.CompareByNameAndPrenume(student))
+                {
+                    cursurile.put(curs.nume,curs.an);
+                    ok=1;
+                }
+                cursuri=cursurile;
         }
 
         note=new TreeMap<String,Integer>();
@@ -75,6 +83,8 @@ public class StudentForm {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            System.out.println(student);
 
             initiere();
             if(cursuri.isEmpty())
@@ -165,8 +175,8 @@ public class StudentForm {
                 anul=1;
                 for (Float media:medie_an){
                     s+=" Anul "+anul+": Media"+ media+"\n";
+                    anul++;
                 }
-
                 txtArea.setText(s);
             }
         });
