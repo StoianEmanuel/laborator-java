@@ -31,7 +31,7 @@ public class LoginDisplay {
 
     private UserAccountType userAccountType;
 
-    public LoginForm(String username, String password) {
+    public LoginDisplay(String username, String password) {
         this.update_userList();
         try {
             Application.getInstance().login(new User(username, password));
