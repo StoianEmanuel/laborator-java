@@ -21,16 +21,16 @@ public class WelcomeFormGUI implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnLogin)   {
-            mainPanel.setVisible(false);
-            owner.setContentPane(new LoginForm(owner).getMainPanel());
-            owner.setTitle("LoginInterface");
-        }
-        else
         if(e.getSource() == btnSignUp)  {
             mainPanel.setVisible(false);
             owner.setContentPane(new SignUpForm(owner).getMainPanel());
             owner.setTitle("SignUpInterface");
+        }
+        else
+            if(e.getSource() == btnLogin)   {
+            mainPanel.setVisible(false);
+            owner.setContentPane(new LoginForm(owner).getMainPanel());
+            owner.setTitle("LoginInterface");
         }
     }
 

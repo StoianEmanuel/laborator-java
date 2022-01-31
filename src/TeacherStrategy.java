@@ -45,7 +45,7 @@ public class TeacherStrategy implements MenuStrategy {
 
     User return_user(String username, String password){
         for(User user:userList)
-            if(user.userName==username && user.password==password)
+            if(user.userName.equals(username) && user.password.equals(password))
                 return user;
         return null;
     }
@@ -97,7 +97,7 @@ public class TeacherStrategy implements MenuStrategy {
                         i = 1;
                         if (x != listStudents.size() + 1) {
                             Student s = new Student(listStudents.get(x - 1).split(" ")[1], listStudents.get(x - 1).split(" ")[2]);
-                            System.out.println("Noteaza studentul ( numere intregi ):");
+                            System.out.println("Noteaza studentul: ");
                             x = cin.nextInt();
                             if (x != 11)
                                 Application.getInstance().manager.getCursuri().get(index_curs).AddNotaToStud(s, x);
@@ -112,7 +112,7 @@ public class TeacherStrategy implements MenuStrategy {
             while (index != list.size() + 1);
             Application.getInstance().displayManager.displayCourses(Application.getInstance().manager.getCursuriArray());
             if(index == list.size() + 1)  {
-                System.out.println("\nProcesul s-a incheiat");
+                System.out.println("\nAplicatia a fost inchisa");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

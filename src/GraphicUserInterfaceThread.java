@@ -6,7 +6,7 @@ public class GraphicUserInterfaceThread extends Thread{
     IDataLoader dataLoader = Settings.dataloader.get(Settings.loadType);
     ArrayList<Student> students = new ArrayList<>(Arrays.asList(dataLoader.createStudentsData()));
     ArrayList<Profesor> teachers = new ArrayList<>(Arrays.asList(dataLoader.createProfesorData()));
-    JFrame frame = new JFrame("Main Page");
+    JFrame frame = new JFrame();
 
     @Override
     public void run() {

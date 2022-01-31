@@ -46,7 +46,7 @@
         <children>
           <component id="88429" class="javax.swing.JButton" binding="btnNoteaza">
             <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Noteaza studenti"/>
@@ -54,19 +54,11 @@
           </component>
           <component id="78b00" class="javax.swing.JButton" binding="btnStudenti">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Vizualizare studenti"/>
             </properties>
-          </component>
-          <component id="22658" class="javax.swing.JList" binding="listNote">
-            <constraints>
-              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-              </grid>
-            </constraints>
-            <properties/>
           </component>
           <component id="c803c" class="javax.swing.JList" binding="listStudenti">
             <constraints>
@@ -90,6 +82,28 @@
             </constraints>
             <properties>
               <text value="Studenti"/>
+            </properties>
+          </component>
+          <component id="c0959" class="javax.swing.JSpinner" binding="spinnerNota">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="9b967" class="javax.swing.JLabel" binding="lblNota">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Nota"/>
+            </properties>
+          </component>
+          <component id="a0cc5" class="javax.swing.JLabel" binding="lblCursuri">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Cursuri"/>
             </properties>
           </component>
         </children>

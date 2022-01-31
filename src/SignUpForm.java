@@ -17,6 +17,7 @@ public class SignUpForm {
     private JTextField txtPrenume;
     private JLabel lblNume;
     private JLabel lblPrenume;
+    private JButton btnLogin;
     private JFrame owner;
 
     public SignUpForm(JFrame owner) {
@@ -24,13 +25,12 @@ public class SignUpForm {
         btnSignUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (txtUsername.getText() != null && txtPassword.getPassword() != null && txtPrenume.getText() != null && txtNume.getText() != null) {
+                if (txtPrenume.getText() != null && txtNume.getText() != null && txtUsername.getText() != null && txtPassword.getPassword() != null) {
                     if (WelcomeFormGUI.students.indexOf(new Student(txtNume.getText(), txtPrenume.getText())) != -1) {
                         {
                             try {
                                 MenuStrategy menuStrategy = new StudentStrategy(new Student(txtNume.getText(), txtPrenume.getText(), WelcomeFormGUI.students.get(WelcomeFormGUI.students.indexOf(new Student(txtNume.getText(), txtPrenume.getText()))).grupa));
                                 Application.getInstance().noi_utilizatori(txtUsername.getText(), Arrays.toString(txtPassword.getPassword()), menuStrategy);
-                                JOptionPane.showMessageDialog(null, "Inscrierea a fost realizata cu succes");
                                 mainPanel.setVisible(false);
                                 owner.setContentPane(new WelcomeFormGUI(owner).getMainPanel());
                                 owner.setTitle("WelcomeInterface");
@@ -42,7 +42,6 @@ public class SignUpForm {
                         try {
                             MenuStrategy menuStrategy = new TeacherStrategy(new Profesor(txtNume.getText(), txtPrenume.getText()));
                             Application.getInstance().noi_utilizatori(txtUsername.getText(), Arrays.toString(txtPassword.getPassword()), menuStrategy);
-                            JOptionPane.showMessageDialog(null, "Inscrierea a fost realizata cu succes");
                             mainPanel.setVisible(false);
                             owner.setContentPane(new WelcomeFormGUI(owner).getMainPanel());
                             owner.setTitle("WelcomeInterface");
@@ -52,6 +51,14 @@ public class SignUpForm {
                     } else
                         JOptionPane.showMessageDialog(null, "Datele introduse nu apartin vreunui student sau profesor", "Informatii gresite", JOptionPane.WARNING_MESSAGE);
                 }
+            }
+        });
+        btnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.setVisible(false);
+                owner.setContentPane(new LoginForm(owner).getMainPanel());
+                owner.setTitle("LoginInterface");
             }
         });
     }

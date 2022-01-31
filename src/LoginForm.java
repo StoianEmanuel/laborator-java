@@ -9,6 +9,7 @@ public class LoginForm {
     private JPasswordField txtPassword;
     private JLabel lblPassword;
     private JButton btnLogin;
+    private JButton btnSignUp;
     private JFrame owner;
 
     public LoginForm(JFrame owner) {
@@ -30,12 +31,19 @@ public class LoginForm {
                             if(Application.getInstance().currentUser.menuStrategy.getAccountType()==UserAccountType.TEACHER) {
                                 mainPanel.setVisible(false);
                                 owner.setContentPane(new ProfesorForm(owner).getMainPanel());
-                                owner.setTitle("Welcome: " + Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().keySet().toString() + " " + Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().values().toString());
                             }
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null,ex.getMessage(),"Campuri goale",JOptionPane.WARNING_MESSAGE);
                     }
                 }
+            }
+        });
+        btnSignUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.setVisible(false);
+                owner.setContentPane(new SignUpForm(owner).getMainPanel());
+                owner.setTitle("SignUpInterface");
             }
         });
     }

@@ -15,8 +15,8 @@ public class StudentForm {
     public StudentForm(JFrame owner){
         this.owner=owner;
         for(String s : Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().keySet()) {
-            String prenume = Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().get(s);
-            String[] list = Application.getInstance().manager.SerchStudent(new Student(s,prenume));
+            String p = Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().get(s);
+            String[] list = Application.getInstance().manager.SerchStudent(new Student(s,p,0,0));
             listCursuri.setListData(list);
         }
         txtUsername.setText(Application.getInstance().currentUser.userName);
@@ -27,8 +27,8 @@ public class StudentForm {
                 if(e.getSource() == btnMedieAn)
                 {
                     for(String s : Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().keySet()) {
-                        String prenume = Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().get(s);
-                        JOptionPane.showMessageDialog(null,"Media pe acest an universitar este: " + Application.getInstance().manager.MediaStudent(new Student(s,prenume)));
+                        String p = Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().get(s);
+                        JOptionPane.showMessageDialog(null,"Media pe acest an universitar este: " + Application.getInstance().manager.MediaStudent(new Student(s,p,0,0)));
                     }
                 }
             }

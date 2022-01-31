@@ -15,8 +15,8 @@ public class Curs implements OperatiiCurs{
         this.profu = profu;
         this.studenti = stud;
         this.an=an;
-        this.note_studenti = new HashMap<Student, Integer>();
-        this.grupe_studenti = new HashMap<Integer,ArrayList<Student>>();
+        this.note_studenti = new HashMap<>();
+        this.grupe_studenti = new HashMap<>();
         ArrayList<Integer> grupe=new ArrayList<Integer>();
         int i = 0;
         if(note.length<=studenti.size()) {
@@ -36,7 +36,7 @@ public class Curs implements OperatiiCurs{
                     grupe_studenti.replace(s.getGrupa(),studentii_grupei);
                 }
                 else{
-                    ArrayList<Student> studentii_noii_grupe= new ArrayList<Student>();
+                    ArrayList<Student> studentii_noii_grupe= new ArrayList<>();
                     studentii_noii_grupe.add(s);
                     grupe_studenti.put(s.getGrupa(),studentii_noii_grupe);
                 }
@@ -193,7 +193,7 @@ public class Curs implements OperatiiCurs{
             i++;
         }
         System.out.println(i + ". " + " Intoarcete la vizualizare cursuri");
-        return new ArrayList<String>(Arrays.asList(list));
+        return new ArrayList<>(Arrays.asList(list));
     }
 
     @Override
@@ -301,13 +301,6 @@ public class Curs implements OperatiiCurs{
         return studenti.contains(student);
     }
 
-    public boolean FindByNumeAndPrenume(String nume, String prenume) {
-        for(Student student:studenti)
-            if(student.CompareByNameAndPrenume(new Student(nume,prenume))==true)
-                return true;
-        return false;
-    }
-
     public Student ReturnStudent(String nume, String prenume){
         for(Student student:studenti)
             if(student.CompareByNameAndPrenume(new Student(nume,prenume))==true)
@@ -329,7 +322,7 @@ public class Curs implements OperatiiCurs{
         this.nume=nume;
         this.descriere=null;
         this.an=0;
-        this.studenti=new HashSet<Student>();
+        this.studenti=new HashSet<>();
         this.note_studenti= new HashMap<>();
         this.grupe_studenti=new HashMap<>();
     }

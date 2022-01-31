@@ -3,31 +3,20 @@
   <component name="ChangeListManager">
     <list default="true" id="c3675ed5-978f-4bb6-a7c2-6a11e63472a9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ConsoleThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConsoleThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Curs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Curs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FileDataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileDataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FileDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileDisplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HardcodatDataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HardcodatDataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LoginDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GraphicUserInterfaceThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GraphicUserInterfaceThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/LoginForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ManagerCursuri.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ManagerCursuri.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MenuStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MenuStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ProfesorDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProfesorDisplay.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProfesorForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProfesorForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProfesorForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProfesorForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignUpDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignUpDisplay.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SignUpForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignUpForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SignUpForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignUpForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StudentForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StudentForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StudentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TeacherForm.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TeacherStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TeacherStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WelcomeFormGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WelcomeFormGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

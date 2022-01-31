@@ -30,7 +30,7 @@ public class StudentStrategy implements MenuStrategy{
 
     User return_user(String username, String password){
         for(User user:userList)
-            if(user.userName==username && user.password==password)
+            if(user.userName.equals(username) && user.password.equals(password))
                 return user;
         return null;
     }
@@ -83,12 +83,8 @@ public class StudentStrategy implements MenuStrategy{
         }
         System.out.println("Cursuri: ");
         int i = 1;
-        for(String s : list)
-        {
-            if(s == null)   {
-                continue;
-            }
-            else {
+        for(String s : list)  {
+            if(s != null)  {
                 System.out.println(i + ". " + s.split(":")[0] + ": " + s.split(":")[1]);
                 i++;
             }
@@ -98,7 +94,7 @@ public class StudentStrategy implements MenuStrategy{
         try (Scanner scanner = new Scanner(System.in)){
             char c=scanner.next().charAt(0);
             if(c == 'x' || c=='X') {
-                System.out.println("\nProcesul s-a incheiat");
+                System.out.println("\nAplicatia a fost inchisa");
             }
         }
         catch (Exception e)  {

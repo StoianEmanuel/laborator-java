@@ -4,8 +4,9 @@ import java.util.Scanner;
 
 public class ConsoleThread extends Thread {
     IDataLoader dataLoader = Settings.dataloader.get(Settings.loadType);
-    ArrayList<Student> students = new ArrayList<>(Arrays.asList(dataLoader.createStudentsData()));
-    ArrayList<Profesor> teachers = new ArrayList<>(Arrays.asList(dataLoader.createProfesorData()));
+
+    ArrayList<Student> studenti = new ArrayList<>(Arrays.asList(dataLoader.createStudentsData()));
+    ArrayList<Profesor> profesori = new ArrayList<>(Arrays.asList(dataLoader.createProfesorData()));
 
     @Override
     public void run() {
@@ -19,7 +20,7 @@ public class ConsoleThread extends Thread {
                 Application.getInstance().currentUser.menuStrategy.menuOption();
             } else if (Application.getInstance().currentUser.menuStrategy.getAccountType() == UserAccountType.TEACHER) {
                 for (String s : Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().keySet()) {
-                    String prenume = Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().get(s);
+                    String p = Application.getInstance().currentUser.menuStrategy.getAccountHolderInformation().get(s);
                 }
                 Application.getInstance().currentUser.menuStrategy.menuOption();
             }

@@ -31,6 +31,18 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
         }
     }
 
+    public void MedieCurs(Curs curs)
+    {
+        Curs c;
+        try        {
+            c = this.search(curs);
+            System.out.println("Media studentilor la cursul: " + c.nume + " este: " + c.media_stud_double());
+        }
+        catch (Exception e)      {
+            System.out.println("Cursul nu a fost gasit ");
+        }
+    }
+
     public List<Curs> getCursuri() {
         return cursuri;
     }
@@ -67,6 +79,22 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
         if (!this.cursuri.remove(curs)) {
             throw new Exception("Cursul " + curs.nume + " nu poate fi sters pentru ca nu se regaseste in programa scolara");
         }
+    }
+
+    public ArrayList<String> cursuri_profesor(Profesor profesor)
+    {
+        int i = 1;
+        ArrayList<String> list = new ArrayList<>();
+        for(Curs c : cursuri)
+        {
+            if(c.profu.equals(profesor))
+            {
+                System.out.println(i + ". " + c.nume);
+                list.add(c.nume);
+                i++;
+            }
+        }
+        return list;
     }
 
     public void UpdateProf(Profesor vechi, Profesor nou) {
@@ -266,23 +294,6 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
         return lista_cursuri;
     }
 
-    public ArrayList<String> cursuri_profesor(Profesor profesor)
-    {
-        int i = 1;
-        ArrayList<String> list = new ArrayList<String>();
-        for(Curs c : cursuri)
-        {
-            if(c.profu.equals(profesor))
-            {
-                System.out.println(i + ". " + c.nume);
-                list.add(c.nume);
-                i++;
-            }
-        }
-        System.out.println(i + ". " + "Inchidere program");
-        return list;
-    }
-
     public Curs[] getCursuriArray() {
         Curs[] c = new Curs[cursuri.size()];
         c = cursuri.toArray(c);
@@ -305,18 +316,16 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
 
     public String[] SerchStudent(Student student)
     {
-        String restanta = null;
-        String[] line = new String[cursuri.size()];
+        String[] line;
+        line = new String[cursuri.size()];
+
+        String restanta = "";
         for (Curs c : cursuri)
         {
             if(c.FindStudent(student))
             {
                 if(c.note_studenti.get(student) == null)     {
                     restanta = "";
-                }
-                else
-                if (c.note_studenti.get(student) == 0)        {
-                    restanta = c.note_studenti.get(student).toString();
                 }
                 else
                 if(c.note_studenti.get(student) < 5)    {
@@ -330,18 +339,6 @@ public class ManagerCursuri implements OperatiiManagerCursuri{
             }
         }
         return line;
-    }
-
-    public void MedieCurs(Curs curs)
-    {
-        Curs c;
-        try        {
-            c = this.search(curs);
-            System.out.println("Media studentilor la cursul: " + c.nume + " este: " + c.media_stud_double());
-        }
-        catch (Exception e)      {
-            System.out.println("Cursul nu a fost gasit!");
-        }
     }
 
     public double MediaStudent(Student student)
